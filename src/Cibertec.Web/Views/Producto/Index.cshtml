@@ -1,0 +1,57 @@
+﻿@model Cibertec.Web.Models.ProductoLista
+@inject Cibertec.Business.ProductoBusiness ProductoBusiness
+
+<h2>Listado de Productos</h2>
+<!-- Busqueda de Datos-->
+<hr />
+@using (Html.BeginForm("Search","Producto",FormMethod.Post))
+{
+    <span>Indroduzca Texto:</span>
+    @Html.TextBox("texto")
+    <input type="submit" value="Buscar" />
+}
+<hr />
+<div>
+    <p>Productos sin Stock :@await ProductoBusiness.GetProductoSinStock()</p>
+</div>
+<hr />
+@Html.ActionLink("Nuevo Producto", "Create", "Producto")
+<br />
+<span>Total de Productos : @Model.Total</span>
+<br />
+@*
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>Descripcion</td>
+            <td>Stock Minimo</td>
+            <td>Fecha de Registro</td>
+            <td>Acciones</td>
+        </tr>*@
+             <!--Redirecciona a ClienteLista.cshtml.-->
+<div>
+    @foreach (var item in Model.Products)
+    {
+        @await Component.InvokeAsync("ProductoLista", new { producto = item })
+    }
+</div>
+
+    @* </table>*@
+<div>
+    <nav>
+        <ul class="pager">
+            @if((int)@ViewData["CurrentPage"] >= 0)
+        {
+                <li>
+                    <a href="@Url.Action("GetProductosPaginado","Producto",new {type = "p" , currentPage = @ViewData["CurrentPage"] })">Previous</a>
+                </li>
+        }
+            @if (!(bool)@ViewData["IsLastPage"])
+        {
+                <li>
+                    <a href="@Url.Action("GetProductosPaginado","Producto",new {type = "n" , currentPage = @ViewData["CurrentPage"] })">Next</a>
+                </li>
+        }
+        </ul>
+    </nav>
+</div>

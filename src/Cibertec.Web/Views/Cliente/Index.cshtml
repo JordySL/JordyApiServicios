@@ -1,0 +1,42 @@
+﻿@model Cibertec.Web.Models.ClienteLista
+@inject Cibertec.Business.ClienteBusiness ClienteBusiness
+
+<h2>Listado de Clientes</h2>
+<hr />
+@using (Html.BeginForm("Search", "Cliente", FormMethod.Post))
+{
+    <span>Busqueda de Clientes:</span>
+    @Html.TextBox("texto")
+    <input type="submit" value="Buscar" />
+}
+<hr />
+@Html.ActionLink("Nuevo Cliente", "Create", "Cliente")
+<br />
+<span>Total de Clientes : @Model.Total</span>
+<br />
+
+<div>
+    @foreach (var item in Model.Clientes)
+    {
+        @await Component.InvokeAsync("ClienteLista", new { cliente = item })
+    }
+</div>
+
+<div class="container" align="center">
+    <nav>
+        <ul class="pager">
+            @if ((int)@ViewData["CurrentPage"] >= 0)
+            {
+                <li>
+                    <a href="@Url.Action("GetClientePag","Cliente",new {type = "p" , currentPage = @ViewData["CurrentPage"] })">Previous</a>
+                </li>
+            }
+            @if (!(bool)@ViewData["IsLastPage"])
+            {
+                <li>
+                    <a href="@Url.Action("GetClientePag","Cliente",new {type = "n" , currentPage = @ViewData["CurrentPage"] })">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
