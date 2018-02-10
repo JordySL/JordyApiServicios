@@ -7,5 +7,6 @@ namespace Cibertec.Models
 {
     public class Test
     {
+
     }
 }
