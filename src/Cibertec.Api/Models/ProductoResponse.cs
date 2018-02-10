@@ -6,5 +6,6 @@ namespace Cibertec.Api.Models
     public class ProductoResponse
     {
         public IEnumerable<Producto> Items { get; set; }
+
     }
 }
