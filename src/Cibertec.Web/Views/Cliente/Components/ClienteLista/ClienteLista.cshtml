@@ -1,0 +1,47 @@
+﻿@model Cibertec.Models.Cliente
+<div class="form-group">
+    <div class="">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img alt="..." src="@Url.Action("GetImage", "Cliente" , new { imgName = @Model.Foto})" height="150" width="150" />
+                <div class="caption">
+                    <h3>@Model.Id</h3>
+                    <p>
+                        Nombre: @Model.Nombre<br />
+                        Apellido Paterno: @Model.ApellidoPaterno<br />
+                        Apellido Materno: @Model.ApellidoMaterno<br />
+                        Direccion       : @Model.Direccion<br />
+                    </p>
+                    <p>
+                        <a class="btn btn-primary" href="@Url.Action("Edit", "Cliente" , new { id=@Model.Id })">Editar</a>
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#@Model.Id">Eliminar</a>
+                        <a class="btn btn-success" target="_blank" href="@Url.Action("GetArchivo", "Cliente" , new { archivoName = @Model.Doc})">Descargar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="@Model.Id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button tyle="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Desea Eliminar el Producto</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>@Model.Id</h3>
+                    <p>
+                        Nombre: @Model.Nombre<br />
+                        Apellido Paterno: @Model.ApellidoPaterno<br />
+                        Apellido Materno: @Model.ApellidoMaterno<br />
+                        Direccion       : @Model.Direccion<br />
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="location='/Cliente/Delete/@Model.Id'">Borrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
